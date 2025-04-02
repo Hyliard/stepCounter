@@ -10,9 +10,15 @@ import Combine
 
 class CountdownTimerViewModel: ObservableObject {
     @Published var remainingTime: TimeInterval = 60  // Tiempo por defecto: 60 segundos
+    @Published private(set) var totalTime: TimeInterval = 60
     private var timer: Timer?
     private var isRunning = false
-
+    
+    var progress: Double {
+        guard totalTime > 0 else { return 0 }
+        return 1 - (remainingTime / totalTime)
+    }
+    
     func start() {
         guard !isRunning, remainingTime > 0 else { return }
         isRunning = true
@@ -34,6 +40,7 @@ class CountdownTimerViewModel: ObservableObject {
     func reset(to seconds: TimeInterval = 60) {
         timer?.invalidate()
         remainingTime = seconds
+        totalTime = seconds
         isRunning = false
     }
 }

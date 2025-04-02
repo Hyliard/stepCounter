@@ -12,7 +12,7 @@ class TimerViewModel: ObservableObject {
     @Published var elapsedTime: TimeInterval = 0
     private var timer: Timer?
     private var startTime: Date?
-    private var isRunning = false
+    @Published var isRunning = false
 
     func start() {
         guard !isRunning else { return }
